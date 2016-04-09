@@ -1,6 +1,6 @@
 #coding=UTF-8
 
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 import data_util
 
 app = Flask(__name__)
@@ -16,8 +16,11 @@ def pack_responce(success, content, message = None):
 @app.route('/data/<page>')
 def data(page):
     crawler = data_util.fetch(page)
+    flag = request.args.get('flag', None)
+    if flag and flag == crawler.flag:
+        return pack_responce(True, {'flag': flag}, 'Please use local-cache data.')
     if crawler:
-        return pack_responce(True, crawler.data)
+        return pack_responce(True, {'flag': crawler.flag, 'data': crawler.data})
     else:
         return pack_responce(False, None, 'Unkown page.')
     

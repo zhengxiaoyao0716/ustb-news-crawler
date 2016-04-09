@@ -1,6 +1,6 @@
 #coding=UTF-8
 
-import abc, time, requests
+import abc, time, requests, hashlib
 from bs4 import BeautifulSoup
 #数据基类
 class BaseData(object):
@@ -36,10 +36,11 @@ class BaseData(object):
             self.data = self.__class__.data
             return
         self.__class__.last_time = now_time
-               
+        
         html = requests.get(url).text
         soup = BeautifulSoup(html, "html.parser")
         self.__class__.data = self.data = self.parse(soup)
+        self.__class__.flag = hashlib.md5(str(self.data)).hexdigest()
         
     #解析
     @abc.abstractmethod
@@ -60,14 +61,6 @@ class HomeData(BaseData):
             'notice': BaseData.parse_table(info_tables[0]),
             'news': BaseData.parse_table(info_tables[1])
         }
-        
-    #公告通知
-    def notice(self):
-        return self.data['notify']
-        
-    #新闻速递
-    def news(self):
-        return self.data['news']
         
         
 #公告
@@ -96,12 +89,12 @@ class NewsData(BaseData):
         
 #holder
 dataMap = {
-    'home': HomeData(),
-    'notice': NoticeData(),
-    'news': NewsData()
+    'home': HomeData,
+    'notice': NoticeData,
+    'news': NewsData
 }
 def fetch(page):
     if page in dataMap:
-        return dataMap[page]
+        return dataMap[page]()
     else:
         return False

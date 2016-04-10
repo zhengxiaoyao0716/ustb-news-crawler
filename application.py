@@ -13,6 +13,7 @@ def pack_responce(success, content, message = None):
 
 
 #####################Api#####################
+#抓取数据
 @app.route('/data/<page>')
 def data(page):
     crawler = data_util.fetch(page)
@@ -23,10 +24,21 @@ def data(page):
         return pack_responce(True, {'flag': crawler.flag, 'data': crawler.data})
     else:
         return pack_responce(False, None, 'Unkown page.')
-    
+        
+        
+import requests
+from bs4 import BeautifulSoup
+#适配界面
 @app.route('/view/<path:href>')
 def view(href):
-    return pack_responce(True, href)
+    r = requests.get("http://oice.ustb.edu.cn/" + href)
+    r.encoding='UTF-8'
+    html = r.text
+    soup = BeautifulSoup(html, "html.parser")
+    record = soup.select('.y-13')[0]
+    if not record:
+        return html
+    return '<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>UstbNews</title></head><body>' + unicode(record) + '</body>'
     
     
 #####################Run#####################

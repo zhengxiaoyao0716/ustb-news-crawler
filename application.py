@@ -24,7 +24,7 @@ def data(page):
     else:
         return pack_responce(False, None, 'Unkown page.')
     
-@app.route('/view/<href>')
+@app.route('/view/<path:href>')
 def view(href):
     return pack_responce(True, href)
     

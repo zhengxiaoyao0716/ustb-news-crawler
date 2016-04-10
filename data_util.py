@@ -28,6 +28,8 @@ class BaseData(object):
             result.append(record)
         return result
         
+    host = "http://oice.ustb.edu.cn/"
+    
     last_time = 0
     def __init__(self, url):
         #降频
@@ -53,7 +55,7 @@ class BaseData(object):
 #主界面
 class HomeData(BaseData):
     def __init__(self):
-        super(HomeData, self).__init__('http://oice.ustb.edu.cn/xinwenzhongxin/')
+        super(HomeData, self).__init__(BaseData.host + 'xinwenzhongxin/')
         
     def parse(self, soup):
         info_tables = soup.select('.y-13')
@@ -68,7 +70,7 @@ class HomeData(BaseData):
 #公告
 class NoticeData(BaseData):
     def __init__(self):
-        super(NoticeData, self).__init__('http://oice.ustb.edu.cn/xinwenzhongxin/gonggaotongzhi/')
+        super(NoticeData, self).__init__(BaseData.host + 'xinwenzhongxin/gonggaotongzhi/')
         
     def parse(self, soup):
         info_tables = soup.select('.y-13')
@@ -80,7 +82,7 @@ class NoticeData(BaseData):
 #新闻
 class NewsData(BaseData):
     def __init__(self):
-        super(NewsData, self).__init__('http://oice.ustb.edu.cn/xinwenzhongxin/xinwensudi/')
+        super(NewsData, self).__init__(BaseData.host + 'xinwenzhongxin/xinwensudi/')
         
     def parse(self, soup):
         info_tables = soup.select('.y-13')

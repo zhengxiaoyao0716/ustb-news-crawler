@@ -31,14 +31,15 @@ from bs4 import BeautifulSoup
 #适配界面
 @app.route('/view/<path:href>')
 def view(href):
-    r = requests.get("http://oice.ustb.edu.cn/" + href)
+    base = "http://oice.ustb.edu.cn/"
+    r = requests.get(base + href)
     r.encoding='UTF-8'
     html = r.text
     soup = BeautifulSoup(html, "html.parser")
     record = soup.select('.y-13')[0]
     if not record:
         return html
-    return '<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>UstbNews</title></head><body>' + unicode(record) + '</body>'
+    return '<!DOCTYPE html><html><head><meta charset="UTF-8"/><base href=' + base + '><title>UstbNews</title></head><body>' + unicode(record) + '</body>'
     
     
 #####################Run#####################

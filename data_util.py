@@ -37,7 +37,9 @@ class BaseData(object):
             return
         self.__class__.last_time = now_time
         
-        html = requests.get(url).text
+        r = requests.get(url)
+        r.encoding='UTF-8'
+        html = r.text
         soup = BeautifulSoup(html, "html.parser")
         self.__class__.data = self.data = self.parse(soup)
         self.__class__.flag = hashlib.md5(str(self.data)).hexdigest()

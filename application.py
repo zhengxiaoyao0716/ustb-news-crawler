@@ -36,10 +36,28 @@ def view(href):
     r.encoding='UTF-8'
     html = r.text
     soup = BeautifulSoup(html, "html.parser")
+    nav = soup.select('.z-2')[0]
+    nav_str = u'当前位置 >'
+    for a in nav.select('a'):
+        #a['href']
+        nav_str += '> ' + a.text + ' '
     record = soup.select('.y-13')[0]
     if not record:
         return html
-    return '<!DOCTYPE html><html><head><meta charset="UTF-8"/><base href=' + base + '><title>UstbNews</title></head><body>' + unicode(record) + '</body>'
+    return '''
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <base href=''' + base + '''/>
+    <title>UstbNews</title>
+    <link href="http://localhost:5100/static/css/view.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="nav"><p>''' + nav_str + '''</p></div>
+    ''' + unicode(record) + '''
+</body>
+'''
     
     
 #####################Run#####################

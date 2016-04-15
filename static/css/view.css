@@ -1,0 +1,28 @@
+body {
+    margin: 0px 8px;
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    box-shadow: 0px 0px 3px black;
+}
+body > table {
+    width: 100%;
+}
+.nav {
+    padding: 12px;
+}
+.y-16 .z-19 {
+    background: #2196F3;
+    box-shadow: 0px 0px 3px black;
+    color: white;
+    font-size: 45px;
+    padding: 80px 0;
+}
+.y-13 > td > :first-child::before {
+    content: "#";
+}
+.y-13 > td > :first-child {
+    font-size: 16px !important;
+    text-align: center;
+}
+.y-13 > td > :last-child {
+    display: none;
+}

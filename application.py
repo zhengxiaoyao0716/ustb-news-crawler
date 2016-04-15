@@ -51,7 +51,7 @@ def view(href):
     <meta charset="UTF-8"/>
     <base href=''' + base + '''/>
     <title>UstbNews</title>
-    <link href="http://localhost:5100/static/css/view.css" rel="stylesheet"/>
+    <link href="http://ustbnews.zheng0716.com/static/css/view.css" rel="stylesheet"/>
 </head>
 <body>
     <div class="nav"><p>''' + nav_str + '''</p></div>
